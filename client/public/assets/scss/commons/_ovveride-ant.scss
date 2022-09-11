@@ -1,0 +1,7 @@
+.ant-rate-star:not(:last-child) {
+  margin-right: 0px !important;
+}
+.ant-btn > .anticon-custom + span,
+.ant-btn > span + .anticon-custom {
+  margin-left: 0 !important;
+}

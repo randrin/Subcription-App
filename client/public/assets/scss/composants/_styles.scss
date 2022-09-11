@@ -1,0 +1,165 @@
+// Colors
+.subscription-primary {
+  color: var(--subscription-primary) !important;
+  &:hover {
+    color: var(--subscription-secondary) !important;
+  }
+}
+.subscription-secondary {
+  color: var(--subscription-secondary) !important;
+}
+.subscription-danger {
+  color: var(--subscription-danger) !important;
+}
+.subscription-tomato {
+  color: var(--subscription-tomato) !important;
+}
+.subscription-success {
+  color: var(--subscription-success) !important;
+}
+.subscription-sliver {
+  color: var(--subscription-sliver) !important;
+}
+.subscription-white {
+  color: var(--subscription-white) !important;
+}
+
+// Backgournd
+.subscription-background-primary {
+  background-color: var(--subscription-primary) !important;
+}
+.subscription-background-secondary {
+  background-color: var(--subscription-secondary) !important;
+}
+.subscription-background-danger {
+  background-color: var(--subscription-danger) !important;
+}
+.subscription-background-tomato {
+  background-color: var(--subscription-tomato) !important;
+}
+.subscription-background-success {
+  background-color: var(--subscription-success) !important;
+}
+.subscription-background-sliver {
+  background-color: var(--subscription-sliver) !important;
+}
+.subscription-background-white {
+  background-color: var(--subscription-white) !important;
+}
+
+// Borders
+.subscription-border-primary {
+  border: 1px solid var(--subscription-primary) !important;
+}
+.subscription-dashed-border-primary {
+  border: 1px dashed var(--subscription-primary) !important;
+}
+.subscription-border-top-primary {
+  border-top-color: var(--subscription-primary) !important;
+}
+.subscription-border-top-secondary {
+  border-top-color: var(--subscription-secondary) !important;
+}
+.subscription-border-top-sliver {
+  border-top-color: var(--subscription-sliver) !important;
+}
+
+// Buttons
+.subscription-btn-secondary {
+  background: var(--subscription-secondary) !important;
+  border-color: var(--subscription-secondary) !important;
+  color: var(--subscription-white) !important;
+  &:hover {
+    color: var(--subscription-secondary) !important;
+    background: var(--subscription-white) !important;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    &:hover {
+      pointer-events: unset;
+    }
+  }
+}
+
+.subscription-btn-outline-secondary {
+  background: var(--subscription-white) !important;
+  border-color: var(--subscription-secondary) !important;
+  color: var(--subscription-secondary) !important;
+  &:hover {
+    color: var(--subscription-white) !important;
+    background: var(--subscription-secondary) !important;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    &:hover {
+      pointer-events: unset;
+    }
+  }
+}
+
+.subscription-btn-outline-primary {
+  background: var(--subscription-white) !important;
+  border-color: var(--subscription-primary) !important;
+  color: var(--subscription-primary) !important;
+  &:hover {
+    color: var(--subscription-white) !important;
+    background: var(--subscription-primary) !important;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    &:hover {
+      pointer-events: unset;
+    }
+  }
+}
+
+.subscription-btn-primary {
+  background: var(--subscription-primary) !important;
+  border-color: var(--subscription-primary) !important;
+  color: var(--subscription-white) !important;
+  &:hover {
+    color: var(--subscription-primary) !important;
+    background: var(--subscription-white) !important;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    &:hover {
+      pointer-events: unset;
+    }
+  }
+}
+
+.subscription-btn-facebook {
+  color: var(--subscription-white);
+  background: #435f9f !important;
+  border-color: #435f9f !important;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Font Size Icon
+.subscription-icon-small {
+  font-size: 25px !important;
+}
+.subscription-icon-medium-small {
+  font-size: 50px !important;
+}
+.subscription-icon-medium {
+  font-size: 80px !important;
+}
+.subscription-icon-large {
+  font-size: 100px !important;
+}
+
+// Utils
+.subscription-text-uppercase {
+  text-transform: uppercase !important;
+}
+.subscription-text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.subscription-text-capitalize {
+  text-transform: capitalize !important;
+}
