@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    setState(JSON.parse(localStorage.getItem("auth")));
+    setState(JSON.parse(localStorage.getItem("auth"))?.data);
   }, []);
 
   // axios config

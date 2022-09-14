@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import Input from "../utils/Input";
-import Button from "../utils/Button";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import axios from "axios";
 import { toast } from "react-hot-toast";
-import { UserContext } from "../../context";
-import { loginSubscription } from "../../services/authService";
+import { UserContext } from "../context";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -11,22 +11,29 @@ const Login = ({ history }) => {
   // context
   const [state, setState] = useContext(UserContext);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const handleClick = async (e) => {
     // console.log("email and password", email, password);
-    await loginSubscription({ email, password })
-      .then((data) => {
-        console.log("data: ", data);
+    try {
+      e.preventDefault();
+      const { data } = await axios.post("/login", {
+        email,
+        password,
+      });
+      console.log(data);
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
         setEmail("");
         setPassword("");
-        setState(data.data);
+        setState(data);
         localStorage.setItem("auth", JSON.stringify(data));
         history.push("/account");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Something went wrong. Try again");
-      });
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong. Try again");
+    }
   };
 
   return (
@@ -54,7 +61,7 @@ const Login = ({ history }) => {
 
             <div className="d-grid">
               <Button
-                handleClick={handleOnSubmit}
+                handleClick={handleClick}
                 type="danger"
                 text="Register"
                 size="sm"
