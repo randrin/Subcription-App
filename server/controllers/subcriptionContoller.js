@@ -9,9 +9,9 @@ export const prices = async (req, res) => {
 };
 
 export const createSubscription = async (req, res) => {
-  // console.log(req.body);
+  console.log(req);
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.auth._id);
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -23,8 +23,8 @@ export const createSubscription = async (req, res) => {
         },
       ],
       customer: user.stripe_customer_id,
-      success_url: process.env.STRIPE_SUCCESS_URL,
-      cancel_url: process.env.STRIPE_CANCEL_URL,
+      success_url: config.STRIPE_SUCCESS_URL,
+      cancel_url: config.STRIPE_CANCEL_URL,
     });
     console.log("checkout session", session);
     res.status(200).json(session.url);
@@ -78,7 +78,7 @@ export const customerPortal = async (req, res) => {
     const user = await User.findById(req.user._id);
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: user.stripe_customer_id,
-      return_url: process.env.STRIPE_SUCCESS_URL,
+      return_url: config.STRIPE_SUCCESS_URL,
     });
     res.status(200).json(portalSession.url);
   } catch (err) {

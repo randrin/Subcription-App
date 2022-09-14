@@ -1,44 +1,58 @@
 import React, { useState, useContext } from "react";
-import Input from "../utils/Input";
-import Button from "../utils/Button";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import axios from "axios";
 import { toast } from "react-hot-toast";
-import { UserContext } from "../../context";
-import { loginSubscription } from "../../services/authService";
+import { UserContext } from "../context";
 
-const Login = ({ history }) => {
+const Register = ({ history }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // context
   const [state, setState] = useContext(UserContext);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
-    // console.log("email and password", email, password);
-    await loginSubscription({ email, password })
-      .then((data) => {
-        console.log("data: ", data);
+  const handleClick = async (e) => {
+    // console.log(name, email, password);
+    try {
+      e.preventDefault();
+      const { data } = await axios.post("/register", {
+        name,
+        email,
+        password,
+      });
+      console.log(data);
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setName("");
         setEmail("");
         setPassword("");
-        setState(data.data);
+        toast.success(
+          `Hey ${data.user.name}. You are part of team now. Congrats!`
+        );
+        setState(data);
         localStorage.setItem("auth", JSON.stringify(data));
-        history.push("/account");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Something went wrong. Try again");
-      });
+        history.push("/");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong. Try again");
+    }
   };
 
   return (
     <div className="d-flex justify-content-center" style={{ height: "80vh" }}>
       <div className="container align-items-center d-flex">
         <div className="row col-md-6 offset-md-3 text-center">
-          <h1 className="pt-5 fw-bold">Login</h1>
+          <h1 className="pt-5 fw-bold">Let's Get Started</h1>
           <p className="lead pb-4">
-            Access your subscriptions. Anytime. Anywhere.
+            Sign up for free. No credit card required.
           </p>
 
           <div className="form-group">
+            <Input label="Name" value={name} setValue={setName} />
             <Input
               label="Email"
               type="email"
@@ -54,7 +68,7 @@ const Login = ({ history }) => {
 
             <div className="d-grid">
               <Button
-                handleClick={handleOnSubmit}
+                handleClick={handleClick}
                 type="danger"
                 text="Register"
                 size="sm"
@@ -67,4 +81,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default Login;
+export default Register;
