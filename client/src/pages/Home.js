@@ -1,7 +1,12 @@
-import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import PriceCard from "../components/cards/PriceCard";
+import PriceCard from "../composants/cards/PriceCard";
 import { UserContext } from "../context";
+import {
+  createSubscription,
+  getListPricesSubscription,
+} from "../services/subscriptionService";
+import { END_POINT_MY_ACCOUNT, END_POINT_REGISTER } from "../routes/EndPoints";
+import toast from "react-hot-toast";
 
 const Home = ({ history }) => {
   const [state, setState] = useContext(UserContext);
@@ -31,19 +36,25 @@ const Home = ({ history }) => {
         state.user &&
         state.user.subscriptions &&
         state.user.subscriptions.resumes_at &&
-        history.push("/account");
+        history.push(END_POINT_MY_ACCOUNT);
     };
 
     state && state.user && isPaused();
   }, [state && state.user]);
 
   const fetchPrices = async () => {
-    const { data } = await axios.get("/prices");
-    console.log("prices get request", data);
-    setPrices(data);
+    await getListPricesSubscription()
+      .then((data) => {
+        console.log("prices get request", data);
+        setPrices(data?.data);
+      })
+      .catch((error) => {
+        console.log("prices get error: ", error);
+      });
   };
 
   const handleClick = async (e, price) => {
+    console.log("price: ", price);
     e.preventDefault();
     if (userSubscriptions && userSubscriptions.includes(price.id)) {
       history.push(`/${price.nickname.toLowerCase()}`);
@@ -51,12 +62,18 @@ const Home = ({ history }) => {
     }
     // console.log("plan clicked", price.id);
     if (state && state.token) {
-      const { data } = await axios.post("/create-subscription", {
+      await createSubscription({
         priceId: price.id,
-      });
-      window.open(data);
+      })
+        .then((data) => {
+          window.open(data.data);
+        })
+        .catch((error) => {
+          console.log("prices get error: ", error);
+          toast.error("Something went wrong. Try again");
+        });
     } else {
-      history.push("/register");
+      history.push(END_POINT_REGISTER);
     }
   };
 
@@ -71,7 +88,7 @@ const Home = ({ history }) => {
 
       <div className="row pt-5 mb-3 text-center">
         {prices &&
-          prices.map((price) => (
+          prices?.map((price) => (
             <PriceCard
               key={price.id}
               price={price}

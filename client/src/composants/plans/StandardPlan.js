@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import { UserContext } from "../../context";
+import { END_POINT_HOME } from "../../routes/EndPoints";
 
-const Basic = ({ history, match }) => {
+const StandardPLan = ({ history, match }) => {
   const [state, setState] = useContext(UserContext);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Basic = ({ history, match }) => {
     // console.log("MATCH", match);
     const plan = match.path.split("/")[1].toUpperCase(); // basic
     if (!result.includes(plan)) {
-      history.push("/");
+      history.push(END_POINT_HOME);
     }
   }, [state && state.user]);
 
@@ -26,8 +27,10 @@ const Basic = ({ history, match }) => {
     <Fragment>
       <div className="container-fluid">
         <div className="row py-5 bg-light text-center">
-          <h1 className="display-4 fw-bold">BASIC</h1>
-          <p className="lead">Here are your 5 exclusive stocks of this month</p>
+          <h1 className="display-4 fw-bold">STANDARD</h1>
+          <p className="lead">
+            Here are your 10 exclusive stocks of this month
+          </p>
         </div>
       </div>
 
@@ -40,6 +43,11 @@ const Basic = ({ history, match }) => {
               <li>PayPal</li>
               <li>Square</li>
               <li>Alibaba</li>
+              <li>Gamestop</li>
+              <li>Jumia</li>
+              <li>Palantir</li>
+              <li>Nio</li>
+              <li>Space</li>
             </ul>
           </div>
 
@@ -62,4 +70,4 @@ const Basic = ({ history, match }) => {
   );
 };
 
-export default Basic;
+export default StandardPLan;

@@ -2,6 +2,11 @@ import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context";
+import {
+  END_POINT_LOGIN,
+  END_POINT_MY_ACCOUNT,
+  END_POINT_REGISTER,
+} from "../routes/EndPoints";
 
 const NavTop = () => {
   const [state, setState] = useContext(UserContext);
@@ -10,7 +15,7 @@ const NavTop = () => {
   const logout = () => {
     setState({ user: {}, token: "" });
     localStorage.removeItem("auth");
-    history.push("/login");
+    history.push(END_POINT_LOGIN);
   };
 
   console.log("STATE => ", state);
@@ -30,7 +35,7 @@ const NavTop = () => {
           </li>
           <ul className="dropdown-menu">
             <li className="nav-item dropdown-item">
-              <Link className="nav-link" to="/account">
+              <Link className="nav-link" to={END_POINT_MY_ACCOUNT}>
                 Account
               </Link>
             </li>
@@ -44,12 +49,12 @@ const NavTop = () => {
       ) : (
         <Fragment>
           <li className="nav-item">
-            <Link className="nav-link" to="/register">
+            <Link className="nav-link" to={END_POINT_REGISTER}>
               Sign up
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/login">
+            <Link className="nav-link" to={END_POINT_LOGIN}>
               Login
             </Link>
           </li>
