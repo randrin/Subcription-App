@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import { UserContext } from "../../context";
+import { END_POINT_HOME } from "../../routes/EndPoints";
 
-const Premium = ({ history, match }) => {
+const PremiumPlan = ({ history, match }) => {
   const [state, setState] = useContext(UserContext);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Premium = ({ history, match }) => {
     // console.log("MATCH", match);
     const plan = match.path.split("/")[1].toUpperCase(); // basic
     if (!result.includes(plan)) {
-      history.push("/");
+      history.push(END_POINT_HOME);
     }
   }, [state && state.user]);
 
@@ -79,4 +80,4 @@ const Premium = ({ history, match }) => {
   );
 };
 
-export default Premium;
+export default PremiumPlan;

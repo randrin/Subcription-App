@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { UserContext } from "../context";
 import moment from "moment";
+import {
+  getCustomerPortalSubscription,
+  getUserSubscriptions,
+} from "../services/subscriptionService";
+import toast from "react-hot-toast";
 
 const Account = ({ history }) => {
   const [state, setState] = useContext(UserContext);
@@ -10,17 +14,30 @@ const Account = ({ history }) => {
 
   useEffect(() => {
     const getSubscriptions = async () => {
-      const { data } = await axios.get("/subscriptions");
-      console.log("subs => ", data);
-      setSubscriptions(data.data);
+      await getUserSubscriptions()
+        .then((data) => {
+          console.log("subs => ", data);
+          setSubscriptions(data.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Something went wrong. Try again");
+        });
     };
 
     if (state && state.token) getSubscriptions();
   }, [state && state.token]);
 
   const manageSubscriptions = async () => {
-    const { data } = await axios.get("/customer-portal");
-    window.open(data);
+    await getCustomerPortalSubscription()
+      .then((data) => {
+        console.log("manage sub => ", data);
+        window.open(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong. Try again");
+      });
   };
 
   return (

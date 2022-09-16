@@ -4,6 +4,7 @@ import Button from "../utils/Button";
 import { toast } from "react-hot-toast";
 import { UserContext } from "../../context";
 import { loginSubscription } from "../../services/authService";
+import { END_POINT_MY_ACCOUNT } from "../../routes/EndPoints";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -20,8 +21,9 @@ const Login = ({ history }) => {
         setEmail("");
         setPassword("");
         setState(data.data);
+        toast.success(`Welcome ${data.data.user.email}`);
         localStorage.setItem("auth", JSON.stringify(data));
-        history.push("/account");
+        history.push(END_POINT_MY_ACCOUNT);
       })
       .catch((error) => {
         console.log(error);

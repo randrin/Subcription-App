@@ -35,7 +35,7 @@ export const createSubscription = async (req, res) => {
 
 export const subscriptionStatus = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.auth._id);
 
     const subscriptions = await stripe.subscriptions.list({
       customer: user.stripe_customer_id,
@@ -59,7 +59,7 @@ export const subscriptionStatus = async (req, res) => {
 
 export const subscriptions = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.auth._id);
 
     const subscriptions = await stripe.subscriptions.list({
       customer: user.stripe_customer_id,
@@ -75,7 +75,7 @@ export const subscriptions = async (req, res) => {
 
 export const customerPortal = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.auth._id);
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: user.stripe_customer_id,
       return_url: config.STRIPE_SUCCESS_URL,
